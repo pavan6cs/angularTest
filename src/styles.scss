@@ -15,3 +15,8 @@ body{
     margin:0;
     background-color:#ECEEEF !important
 }
+app-root{
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}

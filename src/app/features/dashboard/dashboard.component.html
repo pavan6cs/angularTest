@@ -25,58 +25,15 @@
             {{ data.name }}
           </td>
           <td>
-            {{ data.expense }}
+            &#36; {{ data.expense }}
           </td>
         </tr>
       </tbody>
     </table>
     <ng-template #managerTemplate>
+      <h3> {{selectedDepartment}} Department Total Expense : {{selectedDepartmentExpense}}</h3>
       <p>Manager Details</p>
-
-      <mat-tree
-        [dataSource]="dataSource"
-        [treeControl]="treeControl"
-        class="example-tree"
-      >
-        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-          <p>
-            {{ node.name }}<br>
-          <span class="subTitle">{{ node.type }}</span>
-          </p>
-          <p class="salary">{{ node.salary }} <br><span  class="subTitle">expense</span></p>
-        </mat-tree-node>
-        <!-- This is the tree node template for expandable nodes -->
-        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-          <div class="mat-tree-node">
-            <button
-              mat-icon-button
-              matTreeNodeToggle
-              [attr.aria-label]="'Toggle ' + node.name"
-            >
-              <mat-icon class="mat-icon-rtl-mirror">
-                {{
-                  treeControl.isExpanded(node) ? "expand_more" : "chevron_right"
-                }}
-              </mat-icon>
-            </button>
-
-            <p>
-              {{ node.name }}<br>
-            <span class="subTitle">{{ node.type }}</span>
-            </p>
-            <p class="salary">{{ node.salary }} <br><span  class="subTitle">expense</span></p>
-          </div>
-          <!-- There is inline padding applied to this div using styles.
-                    This padding value depends on the mat-icon-button width.  -->
-          <div
-            [class.example-tree-invisible]="!treeControl.isExpanded(node)"
-            role="group"
-          >
-            <ng-container matTreeNodeOutlet></ng-container>
-            <hr>
-          </div>
-        </mat-nested-tree-node>
-      </mat-tree>
+      <expense-tree [data]="data"></expense-tree>
     </ng-template>
   </div>
 </div>

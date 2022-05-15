@@ -1,30 +1,32 @@
-import { Department,Employee } from './model/Department';
+import { Department,Employee, EmployeeWithExpense } from './model/Department';
 import { DashboardService } from './services/dashboard.service';
-import { BehaviorSubject, Subscription, SubscriptionLike } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { SubscriptionLike } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
 
 @Component({
   selector: "dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls:["./dashboard.component.scss"] 
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit,OnDestroy {
   department: { id: number; name: string }[] = [];
   departmentSubscription!: SubscriptionLike;
   result: Department[] = [];
   selected=-1;
   departMentExpense: {name:string; expense:number}[]=[];
-
-  treeControl = new NestedTreeControl<Employee>(node => node.reportee);
-  dataSource = new MatTreeNestedDataSource<Employee>();
-
-  hasChild = (_: number, node: Employee) => !!node.reportee && node.reportee.length > 0;
+  employeeWithExpense: EmployeeWithExpense[]=[];
+  selectedDepartment="";
+  data:EmployeeWithExpense[]=[];
+  selectedDepartmentExpense:number=0;
   salary: number=0;
 
   constructor(private dashboardService: DashboardService) {
+  }
+  ngOnDestroy(): void {
+    if(this.departmentSubscription){
+      this.departmentSubscription.unsubscribe();
+    }
   }
 
   ngOnInit() {
@@ -37,68 +39,30 @@ export class DashboardComponent implements OnInit {
         })
         this.result = data;
         this.getDepartMentExpense(data)
-        console.log(data)
       });
   }
 
 
-  
-
-
   getDepartMentExpense(departmentList: Department[]){
-   
     departmentList.forEach((department)=>{
-    let salary:number=0;
-     department.employee.forEach((employee)=>{
-       salary+=parseInt(employee.salary.toString());
-       if(employee.reportee){
-         employee.reportee.forEach((reportee)=>{
-          salary+=parseInt(reportee.salary.toString());
-          if(employee.reportee){
-            employee.reportee.forEach((e)=>{
-              salary+=parseInt(e.salary.toString());
-          });
-        }
-         })
-       }
-     })
+    let salary= this.dashboardService.calculateTotalSalary(department.employee);
      this.departMentExpense.push({name:department.departmentName,expense:salary});
     });
-
-    departmentList.forEach((department)=>{
-      let sal=this.calculateExpense(department.employee,0);
-      console.log(department.departmentName,sal);
-    });
   }
 
-  calculateExpense(employee:Employee[],sal:number){
-    employee.forEach((e)=>{
-     this.salary=sal+parseInt(e.salary.toString());
-      if(e.reportee){
-        return  this.calculateExpense(e.reportee,sal)
-       }else{
-         return sal;
-       }
-    });
-    return this.salary;
-  }
   change(val:MatSelectChange){
     this.selected=val.value;
     this.result.forEach((department)=>{
       if(department.id===val.value){
-        this.dataSource.data=department.employee;
-        console.log(department.employee)
+        this.selectedDepartment=department.departmentName;
+        let expense=this.departMentExpense.find(e=>e.name==department.departmentName)?.expense;
+        if(expense){
+          this.selectedDepartmentExpense=expense;
+        }
+        this.data=department.employee;
       }
     });
-   console.log(val.value);
-  }
-
-  // calculateIterationSalary(employee: Employee,salary:number){
-  //   salary+=employee.salary;
-  //     return employee.reportee?calculateIterationSalary() 
-  // }
-
-
   
+  }
 
 }

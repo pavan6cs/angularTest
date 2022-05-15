@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Department } from '../model/Department';
+import { Department, Employee, EmployeeWithExpense } from '../model/Department';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
@@ -12,7 +12,21 @@ export class DashboardService {
       return this.http.get<Department[]>(`${this.api_url}/departments`);
   }
 
-  calculateExpenses(){
+  calculateTotalSalary(employees:Employee[])  {
+    let totalSalary:number = 0
+    employees.forEach((employee:EmployeeWithExpense) => {
       
+      totalSalary += parseInt(employee.salary.toString());
+     
+      if (employee.reportee) {
+        let temp=parseInt(this.calculateTotalSalary(employee.reportee).toString())
+        totalSalary += temp;
+        employee.totalExpense=temp;
+      }
+      if(employee.totalExpense)
+      {employee.totalExpense+=parseInt(employee.salary.toString())}
+    })
+   
+    return totalSalary
   }
 }

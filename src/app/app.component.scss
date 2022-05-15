@@ -1,2 +1,8 @@
-
-   
+.content{
+    flex:1 0 auto;
+}
+   app-header{
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+   }

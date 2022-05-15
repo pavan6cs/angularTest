@@ -11,3 +11,7 @@ export interface Employee{
         salary:number,
         reportee?:Employee[]
 }
+
+export interface EmployeeWithExpense extends Employee{
+totalExpense?:number;
+}

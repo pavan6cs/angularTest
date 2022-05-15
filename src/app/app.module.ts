@@ -12,12 +12,16 @@ import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import {MatTreeModule} from '@angular/material/tree';
 import { AppMaterialModule } from './app-material.module';
+import { ExpenseTreeComponent } from './shared/components/expense-tree.component';
+import { AppFooterComponent } from './core/components/app-footer/app-footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppHeaderComponent,
-    DashboardComponent
+    DashboardComponent,
+    ExpenseTreeComponent,
+    AppFooterComponent
   ],
   imports: [
     BrowserModule,
