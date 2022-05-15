@@ -1,0 +1,73 @@
+
+        <div class="main_content">
+            <div class="main_content_header">
+                <mat-form-field class="demo-full-width" appearance="fill">
+                    <mat-label>Choose one</mat-label>
+                    <mat-select [(value)]="selected" (selectionChange)="change($event)">
+                        <mat-option *ngFor="let val of department" [value]="val.id">
+                          {{val.name}}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+            </div>
+
+        <div class="mainContent_body">
+
+         <table class="table" *ngIf="selected===-1;else managerTemplate">
+           <thead>
+             <tr>
+               <th>
+                 Department Name
+               </th>
+               <th>
+                 Expense
+               </th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr *ngFor="let data of departMentExpense">
+               <td>
+                 {{data.name}}
+
+               </td>
+               <td>
+                 {{data.expense}}
+
+               </td>
+
+             </tr>
+           </tbody>
+
+         </table>
+         <ng-template #managerTemplate>
+           <p>Manager Details</p>
+
+           <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                {{node.name}}
+            </mat-tree-node>
+            <!-- This is the tree node template for expandable nodes -->
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                <div class="mat-tree-node">
+                  <button mat-icon-button matTreeNodeToggle
+                          [attr.aria-label]="'Toggle ' + node.name">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                      {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                  </button>
+                  {{node.name}}
+                </div>
+                <!-- There is inline padding applied to this div using styles.
+                    This padding value depends on the mat-icon-button width.  -->
+                <div [class.example-tree-invisible]="!treeControl.isExpanded(node)"
+                    role="group">
+                  <ng-container matTreeNodeOutlet></ng-container>
+              </div>
+            </mat-nested-tree-node>
+          </mat-tree>
+
+         </ng-template>
+        </div>
+    </div>
+    <!-- </mat-sidenav-content>
+</mat-sidenav-container> -->
