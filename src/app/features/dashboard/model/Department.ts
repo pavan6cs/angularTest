@@ -1,7 +1,7 @@
 export interface Department {
     id:number,
     departmentName:string,
-    employees:Employee[]
+    employee:Employee[]
                 
 }
 

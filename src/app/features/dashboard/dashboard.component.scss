@@ -1,0 +1,18 @@
+.mainContent_body{
+padding-left: 2.3em;
+padding-right: 1em;
+background-color: #ECEEEF;
+padding-top: 8px;
+}
+
+.main_content{
+    flex-basis: 83%;
+    overflow: auto;
+}
+
+.main_content_header{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 2.3em;
+    margin-right: 1em;
+}
