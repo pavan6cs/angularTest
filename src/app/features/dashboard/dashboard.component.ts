@@ -18,6 +18,11 @@ export class DashboardComponent implements OnInit {
   selected=-1;
   departMentExpense: {name:string; expense:number}[]=[];
 
+  treeControl = new NestedTreeControl<Employee>(node => node.reportee);
+  dataSource = new MatTreeNestedDataSource<Employee>();
+
+  hasChild = (_: number, node: Employee) => !!node.reportee && node.reportee.length > 0;
+  salary: number=0;
 
   constructor(private dashboardService: DashboardService) {
   }
@@ -37,9 +42,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  loadDepartment(val:number){
-
-  }
+  
 
 
   getDepartMentExpense(departmentList: Department[]){
@@ -51,22 +54,40 @@ export class DashboardComponent implements OnInit {
        if(employee.reportee){
          employee.reportee.forEach((reportee)=>{
           salary+=parseInt(reportee.salary.toString());
+          if(employee.reportee){
+            employee.reportee.forEach((e)=>{
+              salary+=parseInt(e.salary.toString());
+          });
+        }
          })
        }
-
-
      })
      this.departMentExpense.push({name:department.departmentName,expense:salary});
     });
 
-   
+    departmentList.forEach((department)=>{
+      let sal=this.calculateExpense(department.employee,0);
+      console.log(department.departmentName,sal);
+    });
   }
 
+  calculateExpense(employee:Employee[],sal:number){
+    employee.forEach((e)=>{
+     this.salary=sal+parseInt(e.salary.toString());
+      if(e.reportee){
+        return  this.calculateExpense(e.reportee,sal)
+       }else{
+         return sal;
+       }
+    });
+    return this.salary;
+  }
   change(val:MatSelectChange){
     this.selected=val.value;
     this.result.forEach((department)=>{
       if(department.id===val.value){
         this.dataSource.data=department.employee;
+        console.log(department.employee)
       }
     });
    console.log(val.value);
@@ -78,10 +99,6 @@ export class DashboardComponent implements OnInit {
   // }
 
 
-  treeControl = new NestedTreeControl<Employee>(node => node.reportee);
-  dataSource = new MatTreeNestedDataSource<Employee>();
-
-  hasChild = (_: number, node: Employee) => !!node.reportee && node.reportee.length > 0;
-
+  
 
 }
