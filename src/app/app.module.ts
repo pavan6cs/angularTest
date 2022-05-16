@@ -33,8 +33,6 @@ import { AppFooterComponent } from './core/components/app-footer/app-footer.comp
     HttpClientModule,
     MatTreeModule,
     AppMaterialModule,
-
-
   ],
   providers: [],
   bootstrap: [AppComponent]
