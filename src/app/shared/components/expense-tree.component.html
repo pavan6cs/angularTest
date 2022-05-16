@@ -8,7 +8,7 @@
             {{ node.name }}<br>
           <span class="subTitle">{{ node.type }}</span>
           </p>
-          <p class="salary">&#36; {{ node.salary }} <br><span  class="subTitle">expense</span></p>
+          <p class="salary">&#36; {{ node.salary }} <br><span  class="subTitle">Total Exp</span></p>
         </mat-tree-node>
         <!-- This is the tree node template for expandable nodes -->
         <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
@@ -29,7 +29,7 @@
               {{ node.name }}<br>
             <span class="subTitle">{{ node.type }}</span>
             </p>
-            <p class="salary"> &#36; {{ node.totalExpense }} <br><span  class="subTitle">expense</span></p>
+            <p class="salary"> &#36; {{ node.totalExpense }} <br><span  class="subTitle">Total Exp</span></p>
           </div>
           <hr>
           <!-- There is inline padding applied to this div using styles.

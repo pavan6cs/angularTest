@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="center">
+        <h1>Login</h1>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <div class="txt_field">
+                <input type="text" formControlName="email" required>
+                <span></span>
+                <label>Username</label>
+            </div>
+            <div class="txt_field">
+                <input type="password"  formControlName="pass" required>
+                <span></span>
+                <label>Password</label>
+            </div>
+            <div class="pass">Forgot password?</div>
+            <input type="submit" value="Login">
+            <div class="signup_link">
+                Not a member?
+                <a href="#">Signup</a>
+            </div>
+        </form>
+    </div>
+</div>

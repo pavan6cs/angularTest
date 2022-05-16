@@ -1,39 +1,44 @@
-<h2 class="title">Expense Dashboard for Department</h2>
-<div class="main_content">
-  <div class="main_content_header">
-    <mat-form-field class="demo-full-width" appearance="fill">
-      <mat-label>Choose Dept</mat-label>
-      <mat-select [(value)]="selected" (selectionChange)="change($event)">
-        <mat-option *ngFor="let val of department" [value]="val.id">
-          {{ val.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="mainContent_body">
-    <table class="table" *ngIf="selected === -1; else managerTemplate">
-      <thead>
-        <tr >
-          <th >Dept. Name</th>
-          <th >Expense</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of departMentExpense">
-          <td>
-            {{ data.name }}
-          </td>
-          <td>
-            &#36; {{ data.expense }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <ng-template #managerTemplate>
-      <h3> {{selectedDepartment}} Department Total Expense : {{selectedDepartmentExpense}}</h3>
-      <p>Manager Details</p>
-      <expense-tree [data]="data"></expense-tree>
-    </ng-template>
+<app-header>
+</app-header>
+<div class="content">
+  <h2 class="title">Expense Dashboard for Department</h2>
+  <div class="main_content">
+    <div class="main_content_header">
+      <mat-form-field class="demo-full-width" appearance="fill">
+        <mat-label>Choose Dept</mat-label>
+        <mat-select [(value)]="selected" (selectionChange)="change($event)">
+          <mat-option *ngFor="let val of department" [value]="val.id">
+            {{ val.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <div class="mainContent_body">
+      <table class="table" *ngIf="selected === -1; else managerTemplate">
+        <thead>
+          <tr >
+            <th >Dept. Name</th>
+            <th >Expense</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of departMentExpense">
+            <td>
+              {{ data.name }}
+            </td>
+            <td>
+              &#36; {{ data.expense }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #managerTemplate>
+        <h3> {{selectedDepartment}} Department Total Expense : {{selectedDepartmentExpense}}</h3>
+        <p>Manager Details</p>
+        <expense-tree [data]="data"></expense-tree>
+      </ng-template>
+    </div>
   </div>
 </div>
+

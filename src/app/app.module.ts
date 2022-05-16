@@ -14,6 +14,8 @@ import {MatTreeModule} from '@angular/material/tree';
 import { AppMaterialModule } from './app-material.module';
 import { ExpenseTreeComponent } from './shared/components/expense-tree.component';
 import { AppFooterComponent } from './core/components/app-footer/app-footer.component';
+import { LoginComponent } from './features/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { AppFooterComponent } from './core/components/app-footer/app-footer.comp
     AppHeaderComponent,
     DashboardComponent,
     ExpenseTreeComponent,
-    AppFooterComponent
+    AppFooterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,8 @@ import { AppFooterComponent } from './core/components/app-footer/app-footer.comp
     HttpClientModule,
     MatTreeModule,
     AppMaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
