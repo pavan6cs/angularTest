@@ -22,7 +22,7 @@ describe('AppHeaderComponent', () => {
   });
   it(`should have a title name 'Jhon'`, () => {
     fixture = TestBed.createComponent(AppHeaderComponent);
-   const component:HTMLElement  = fixture.nativeElement;
+   const component:HTMLElement  = fixture.debugElement.nativeElement;
    const p=component.querySelector('.name')!;
     expect(p.textContent).toEqual('Jhon');
   });

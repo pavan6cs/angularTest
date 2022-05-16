@@ -22,17 +22,17 @@ describe('AppComponent', () => {
 
   it('should have app-header', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.nativeElement;
+    const app = fixture.debugElement.nativeElement;
     expect(app.querySelector('app-header')).toBeTruthy();
   });
   it('should have app-footer', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.nativeElement;
+    const app = fixture.debugElement.nativeElement;
     expect(app.querySelector('app-footer')).toBeTruthy();
   });
   it('should have dashboard', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.nativeElement;
+    const app = fixture.debugElement.nativeElement;
     expect(app.querySelector('dashboard')).toBeTruthy();
   });
 });
