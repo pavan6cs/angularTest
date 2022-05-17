@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.invalid){
       return;
     }
+    this.authService.setUserName(this.loginForm.value.email)
     this.authService.login(this.loginForm.value);
     this.router.navigateByUrl('/home');
   }
